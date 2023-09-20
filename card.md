@@ -1,0 +1,1 @@
+Questa è una demo per un ChatBot per il sito di TheRoyaLand. E' una implementazione di un ConversationalRetrieverChain di LangChain utilizzando un LLM di OpenAI. Utilizza SKLearnVectorStore per salvare i documenti localmente. Il chatbot è in grado di rispondere a domande riguardante i prodotti di TheRoyaLand, l'azienda e le casate reali.
