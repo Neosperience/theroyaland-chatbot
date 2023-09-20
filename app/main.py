@@ -108,7 +108,7 @@ def main():
         with st.chat_message('assistant', avatar='https://www.goierrivalley.com/media/com_jbusinessdirectory/pictures/companies/85/cropped-1557903681.png'):
             message_placeholder = st.empty()
             full_response = ""
-            answer = response['answer'] + ' Per maggiori informazioni: ' + response['source_documents'][0].metadata['source']
+            answer = response['answer'] 
             for chunk in answer.split():
                 full_response += chunk + " "
                 time.sleep(0.04)
