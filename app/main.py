@@ -29,7 +29,7 @@ def openai_model(key):
 
 @st.cache_resource(show_spinner="Loading vectorstore! Please wait.")
 def vectordb():
-    loader = TextLoader(file_path="./apps/theroyaland_chatbot/app/theroyaland.txt")
+    loader = TextLoader("./apps/theroyaland_chatbot/app/theroyaland.txt")
     documents = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size= 500, chunk_overlap=20)
     docs = text_splitter.split_documents(documents)
@@ -38,23 +38,23 @@ def vectordb():
 
 @st.cache_resource
 def load_chain(_prompt_template):
-    retriever = vectorstore.as_retriever(search_type='mmr', search_kwargs={'k': 2})
+    retriever = vectorstore.as_retriever(search_type='mmr', search_kwargs={'k': 5})
     llm = ChatOpenAI(temperature=0, openai_api_key=os.environ["OPENAI_API_KEY"])
     conversational_memory = ConversationTokenBufferMemory(llm=llm,memory_key='chat_history',
                                             return_messages=True,
                                             output_key="answer",
-                                            max_token_limit=1800)
+                                            max_token_limit=1000)
     chain = ConversationalRetrievalChain.from_llm(llm=llm,
                                             memory=conversational_memory,
                                             combine_docs_chain_kwargs={'prompt':prompt_template},
                                             verbose=False,
                                             return_source_documents=True,
                                             retriever=retriever,
-                                            max_tokens_limit=1800)
+                                            max_tokens_limit=1000)
     return chain, conversational_memory
 
 def load_prompt():
-    identity = "You are a helpful chatbot for the Nippon Gases Company Website, that helps customers with answering their questions regarding their products."
+    identity = "You are a helpful chatbot for TheRoyaLand Website, that helps customers with answering their questions regarding their products."
     system_template = """{identity} Use the context to answer the questions. \ 
                         If you don't know how to answer, say that you don't have enought information in order to correctly answer their question. \
                         For reference, the chat history is shown.
