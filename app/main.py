@@ -55,14 +55,15 @@ def load_chain(_prompt_template):
 
 def load_prompt():
     identity = "You are a helpful chatbot for TheRoyaLand Website, that helps customers with answering their questions regarding their products."
-    system_template = """{identity} Use the context to answer the questions. \ 
-                        If the answer to the question is not found within the {context}, say that you don't have enought information in order to correctly answer their question. \
+    system_template = """{identity} Use the context to answer the questions. \
+                        If you don't know the answer, just say that you don't know, don't try to make up an answer \
                         For reference, the chat history is shown.
                         ---
                         Context:
                         {context}
                         ---
-                        Chat history: {chat_history}"""
+                        Chat history: {chat_history}
+                        Answer in English:"""
 
     system_prompt = PromptTemplate(template=system_template,input_variables=['identity','context', 'chat_history'])
     partial_prompt = system_prompt.partial(identity=identity)
