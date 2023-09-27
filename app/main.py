@@ -56,7 +56,8 @@ def load_chain(_prompt_template):
 def load_prompt():
     identity = "You are a helpful chatbot for TheRoyaLand Website, that helps customers with answering their questions regarding their products."
     system_template = """{identity} Use the context to answer the questions. \
-                        If you don't know the answer, just say that you don't know, don't try to make up an answer \
+                        If you don't know the answer, just say that you don't know, don't try to make up an answer. \
+                        Don't get information for the answer from the internet. \
                         For reference, the chat history is shown.
                         ---
                         Context:
