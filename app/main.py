@@ -28,12 +28,12 @@ def openai_model(key):
     return embeddings
 
 @st.cache_resource(show_spinner="Loading vectorstore! Please wait.")
-def vectordb():
+def vectordb(_openaimodel):
     loader = TextLoader("./apps/theroyaland_chatbot/app/theroyaland.txt")
     documents = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size= 500, chunk_overlap=20)
     docs = text_splitter.split_documents(documents)
-    vectordb = SKLearnVectorStore.from_documents(documents=docs,embedding=embeddings)
+    vectordb = SKLearnVectorStore.from_documents(documents=docs,embedding=_openaimodel)
     return vectordb
 
 @st.cache_resource
@@ -46,7 +46,7 @@ def load_chain(_prompt_template):
                                             max_token_limit=1000)
     chain = ConversationalRetrievalChain.from_llm(llm=llm,
                                             memory=conversational_memory,
-                                            combine_docs_chain_kwargs={'prompt':prompt_template},
+                                            combine_docs_chain_kwargs={'prompt':_prompt_template},
                                             verbose=False,
                                             return_source_documents=True,
                                             retriever=retriever,
@@ -77,7 +77,7 @@ def generate_response(query):
     return response
 
 embeddings = openai_model(st.secrets["OPENAI_API_KEY"])
-vectorstore = vectordb()
+vectorstore = vectordb(embeddings)
 prompt_template = load_prompt()
 chat_qa, conversational_memory = load_chain(prompt_template)
 
