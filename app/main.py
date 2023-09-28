@@ -57,14 +57,15 @@ def load_prompt():
     identity = "You are a helpful chatbot for TheRoyaLand Website, that helps customers with answering their questions regarding their products."
     system_template = """{identity} Use the context to answer the questions. \
                         If you don't know the answer, just say that you don't know, don't try to make up an answer. \
-                        Don't get information for the answer from the internet. \
+                        Limit the answer to the documents you have. \
+                        Answer the question in the same language the question was asked. If the question is in English, then answer in English. \
                         For reference, the chat history is shown.
                         ---
                         Context:
                         {context}
                         ---
                         Chat history: {chat_history}
-                        Answer in English:"""
+                        """
 
     system_prompt = PromptTemplate(template=system_template,input_variables=['identity','context', 'chat_history'])
     partial_prompt = system_prompt.partial(identity=identity)
