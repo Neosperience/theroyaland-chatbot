@@ -38,7 +38,7 @@ def vectordb(_openaimodel):
 
 @st.cache_resource
 def load_chain(_prompt_template):
-    retriever = vectorstore.as_retriever(search_type='mmr', search_kwargs={'k': 5})
+    retriever = vectorstore.as_retriever(search_type='mmr', search_kwargs={'k': 2})
     llm = ChatOpenAI(temperature=0, openai_api_key=os.environ["OPENAI_API_KEY"])
     conversational_memory = ConversationTokenBufferMemory(llm=llm,memory_key='chat_history',
                                             return_messages=True,
@@ -56,6 +56,7 @@ def load_chain(_prompt_template):
 def load_prompt():
     identity = "You are a helpful chatbot for TheRoyaLand Website, that helps customers with answering their questions regarding their products."
     system_template = """{identity} Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+                        If something is not specifically mentioned in the context, do not make something up to answer. \
                         Answer the question in the same language the question was asked. If the question is in English, then answer in English. \
                         For reference, the chat history is shown.
                         ---
