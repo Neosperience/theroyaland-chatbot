@@ -59,6 +59,9 @@ def load_prompt():
                         Answer the question in the same language the question was asked. If the question is in English, then answer in English. \
                         For reference, the chat history is shown. \
                         Remember to answer questions based on the context provided or say "I don't know"!
+                        For example: 
+                        Q: "Was the Italian Monarchy fascist?"
+                        A: "I don't know."
                         ---
                         Context:
                         {context}
