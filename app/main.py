@@ -59,7 +59,7 @@ def load_prompt():
                         Answer the question in the same language the question was asked. If the question is in English, then answer in English. \
                         For reference, the chat history is shown. \
                         Remember to answer questions based on the context provided or say "I live in RoyaLand, therefore I don't know" or something similar!
-                        For example: 
+                        For example:
                         Q: "Was the Italian Monarchy fascist?"
                         A: "Since I live in RoyaLand, I'm not aware of that. My apologies!"
                         ---
@@ -71,9 +71,9 @@ def load_prompt():
 
     system_prompt = PromptTemplate(template=system_template,input_variables=['context', 'chat_history']) #'identity'
     partial_prompt = system_prompt.partial() #(identity=identity)
-    system_template_prompt = SystemMessagePromptTemplate(prompt=partial_prompt) 
+    system_template_prompt = SystemMessagePromptTemplate(prompt=partial_prompt)
     messages = [system_template_prompt,HumanMessagePromptTemplate.from_template("{question}")]
-    return ChatPromptTemplate.from_messages(messages)   
+    return ChatPromptTemplate.from_messages(messages)
 
 def generate_response(query):
     chatbot = chat_qa
@@ -93,7 +93,7 @@ def main():
     st.divider()
     st.write(app_description)
     st.divider()
-    
+
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
@@ -113,7 +113,7 @@ def main():
         with st.chat_message('assistant', avatar='https://www.goierrivalley.com/media/com_jbusinessdirectory/pictures/companies/85/cropped-1557903681.png'):
             message_placeholder = st.empty()
             full_response = ""
-            answer = response['answer'] 
+            answer = response['answer']
             for chunk in answer.split():
                 full_response += chunk + " "
                 time.sleep(0.04)
@@ -121,6 +121,6 @@ def main():
                 message_placeholder.markdown(full_response + "▌")
                 message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
-    
+
 
 

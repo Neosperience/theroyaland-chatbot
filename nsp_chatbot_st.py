@@ -7,8 +7,8 @@ from app import app_name, app_executable # type: ignore
 #if not check_password():
 #    st.stop()
 
-st.set_page_config(page_title=app_name, page_icon=":robot:")
-    
+# st.set_page_config(page_title=app_name, page_icon=":robot:")
+
 show_logo()
 
 app_executable()
