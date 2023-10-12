@@ -29,7 +29,7 @@ def openai_model(key):
 
 @st.cache_resource(show_spinner="Loading vectorstore! Please wait.")
 def vectordb(_openaimodel):
-    loader = TextLoader("./apps/theroyaland_chatbot/app/theroyaland.txt")
+    loader = TextLoader("./apps/theroyaland_chatbot/app/Texts_for_The_RoyaLand_Chatbot_V3.txt")
     documents = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size= 500, chunk_overlap=20)
     docs = text_splitter.split_documents(documents)
