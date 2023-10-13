@@ -1,0 +1,4 @@
+[submodule "__infrastructure"]
+	path = __infrastructure
+	url = git@gitlab.com:nspgroup/products/ml-demos/infrastructure.git
+	branch = develop
