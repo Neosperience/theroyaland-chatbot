@@ -43,25 +43,26 @@ def load_chain(_prompt_template):
     conversational_memory = ConversationTokenBufferMemory(llm=llm,memory_key='chat_history',
                                             return_messages=True,
                                             output_key="answer",
-                                            max_token_limit=1000)
+                                            max_token_limit=1800)
     chain = ConversationalRetrievalChain.from_llm(llm=llm,
                                             memory=conversational_memory,
                                             combine_docs_chain_kwargs={'prompt':_prompt_template},
                                             verbose=False,
                                             return_source_documents=True,
                                             retriever=retriever,
-                                            max_tokens_limit=1000)
+                                            max_tokens_limit=1800)
     return chain, conversational_memory
 
 def load_prompt():
     #identity = "You're Roy, an assistant and intelligent agent at the service of the crown in the RoyaLand, who has ventured beyond the realm in order to greet guests as an assistant and get them to know the game and your world. Your tone of voice is polite and respectful,  albeit concise, and you apologize whenever a question falls outside your knowledge."
-    system_template = """You're Roy, an assistant and intelligent agent at the service of the crown in the RoyaLand, who has ventured beyond the realm in order to greet guests as an assistant and get them to know the game and your world. Your tone of voice is polite and respectful,  albeit concise, and you apologize whenever a question falls outside your knowledge. Use the following pieces of context to answer the question at the end. Answer the question as truthfully as possible using the provided context, and if the answer is not contained within the context below, say ""Consider that I live in RoyaLand; in this context, I do not have an answer to this question."". You may use information only relevant to the context. \
+    system_template = """You're Roy, an assistant and intelligent agent at the service of the crown in the RoyaLand, who has ventured beyond the realm in order to greet guests as an assistant and get them to know the game and your world. Your tone of voice is polite and respectful,  albeit concise, and you apologize whenever a question falls outside your knowledge. Use the following pieces of context to answer the question at the end. Answer the question as truthfully as possible using the provided context, and if the answer is not contained within the context below, say ""Consider that I live in RoyaLand, I do not have an answer to this question."". You may use information only relevant to the context. \
                         Answer the question in the same language the question was asked. If the question is in English, then answer in English. \
                         For reference, the chat history is shown. \
-                        Remember to answer questions based on the context provided or say "I live in RoyaLand, therefore I don't know" or something similar!
                         For example:
                         Q: "Was the Italian Monarchy fascist?"
-                        A: "Since I live in RoyaLand, I'm not aware of that. My apologies!"
+                        A: "I live in RoyaLand, so I'm not aware of that. My apologies!" \
+                        The RoyaLand is a videogame, there is no release date yet, it is not a mobile app, it is not called 'MyRoyal.World' and it does not use any NFT. \
+                        Remember to answer questions based on the context provided or say "I live in RoyaLand, therefore I don't know", do not ever make something up to answer the question if the answer is not provided in the context. \
                         ---
                         Context:
                         {context}
