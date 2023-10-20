@@ -38,7 +38,7 @@ def vectordb(_openaimodel):
 
 @st.cache_resource
 def load_chain(_prompt_template):
-    retriever = vectorstore.as_retriever(search_type='mmr', search_kwargs={'k': 2})
+    retriever = vectorstore.as_retriever(search_type='mmr', search_kwargs={'k': 5})
     llm = ChatOpenAI(temperature=0, openai_api_key=os.environ["OPENAI_API_KEY"])
     conversational_memory = ConversationTokenBufferMemory(llm=llm,memory_key='chat_history',
                                             return_messages=True,
