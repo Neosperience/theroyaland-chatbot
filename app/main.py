@@ -22,7 +22,7 @@ from PIL import Image
 
 load_env()
 
-@st.cache_data
+@st.cache_resource
 def openai_model(key):
     embeddings = OpenAIEmbeddings(openai_api_key=os.environ["OPENAI_API_KEY"])
     return embeddings
@@ -37,8 +37,8 @@ def vectordb(_openaimodel):
     return vectordb
 
 @st.cache_resource
-def load_chain(_prompt_template):
-    retriever = vectorstore.as_retriever(search_type='mmr', search_kwargs={'k': 5})
+def load_chain(_prompt_template,_vectorstore):
+    retriever = _vectorstore.as_retriever(search_type='mmr', search_kwargs={'k': 5})
     llm = ChatOpenAI(temperature=0, openai_api_key=os.environ["OPENAI_API_KEY"])
     conversational_memory = ConversationTokenBufferMemory(llm=llm,memory_key='chat_history',
                                             return_messages=True,
@@ -84,7 +84,7 @@ def generate_response(query):
 embeddings = openai_model(st.secrets["OPENAI_API_KEY"])
 vectorstore = vectordb(embeddings)
 prompt_template = load_prompt()
-chat_qa, conversational_memory = load_chain(prompt_template)
+chat_qa, conversational_memory = load_chain(prompt_template,vectorstore)
 
 def main():
     from . import app_description, app_name
