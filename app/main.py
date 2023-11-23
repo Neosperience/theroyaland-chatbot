@@ -81,7 +81,7 @@ def generate_response(query):
     response = chatbot({"question": query,"chat_history": conversational_memory})
     return response
 
-embeddings = openai_model(st.secrets["OPENAI_API_KEY"])
+embeddings = openai_model(os.environ["OPENAI_API_KEY"])
 vectorstore = vectordb(embeddings)
 prompt_template = load_prompt()
 chat_qa, conversational_memory = load_chain(prompt_template,vectorstore)
