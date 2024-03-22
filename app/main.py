@@ -79,7 +79,7 @@ def load_prompt():
 
 def generate_response(query):
     chatbot = chat_qa
-    response = chatbot({"question": query,"chat_history": conversational_memory})
+    response = chatbot.invoke({"question": query,"chat_history": conversational_memory})
     return response
 
 embeddings = openai_model(st.secrets["OPENAI_API_KEY"])
